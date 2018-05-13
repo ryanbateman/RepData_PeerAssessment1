@@ -58,7 +58,7 @@ We can replace the missing step values with their equivalent interval average.
 ```r
 data <- data %>% 
     group_by(interval) %>% 
-    mutate(steps = ifelse(is.na(steps), mean(steps, na.rm = T), steps))
+    mutate(steps = ifelse(is.na(steps), mean(steps, na.rm = TRUE), steps))
 ```
 
 ```
@@ -78,7 +78,22 @@ hist(filledStepData$steps, breaks = 10, main = "Histogram of steps taken daily w
 ![](PA1_template_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
 
 The **mean** number of daily steps after NA replacement is 10766.  
-The **median** number of daily steps after NA replacement is 10766.  
+The **median** number of daily steps after NA replacement is 10766.  These values very little from their unfilled counterparts due to the replacement method. There is no great discernible change from the total daily amount of steps show in the histogram, though the histogram shows (rightly) that the frequency of the steps reported has increased. 
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
+
+Firstly, let's create a factor variable and add it to the column, indicating whether the dates are weekends or not.  
+
+
+```r
+data <- data %>% 
+    mutate(dayType = ifelse(weekdays(date) %in% c("Saturday", "Sunday"), "weekend", "weekday"))
+
+ggplot(data, aes(interval, steps)) + geom_line(color = "steelblue") +
+    facet_wrap(~dayType, nrow=2) +
+    labs(x = "Interval", y = "Number of Steps") +
+    theme_bw()
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
