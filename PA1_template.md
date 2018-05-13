@@ -97,3 +97,5 @@ ggplot(data, aes(interval, steps)) + geom_line(color = "steelblue") +
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
+
+As the graphs shows, weekends tend to have a later start and, at a glance, a lower average step rate, as well as less consistent activity. 
