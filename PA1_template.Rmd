@@ -74,4 +74,8 @@ Firstly, let's create a factor variable and add it to the column, indicating whe
 data <- data %>% 
     mutate(dayType = ifelse(weekdays(date) %in% c("Saturday", "Sunday"), "weekend", "weekday"))
 
+ggplot(data, aes(interval, steps)) + geom_line(color = "steelblue") +
+    facet_wrap(~dayType, nrow=2) +
+    labs(x = "Interval", y = "Number of Steps") +
+    theme_bw()
 ```
